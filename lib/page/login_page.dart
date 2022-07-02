@@ -1,4 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:kpeasy/commond/theme_helper.dart';
+import 'package:kpeasy/page/forgot_password_page.dart';
+import 'package:kpeasy/page/main_sale_item.dart';
+import 'package:kpeasy/page/profile_page.dart';
+import 'package:kpeasy/page/register_page.dart';
+import 'package:kpeasy/page/widgets/header_widget.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
@@ -8,116 +15,134 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
+  double _headerHeight = 250;
+  Key _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.phone_android,
-                size: 100,
-              ),
-              Text(
-                'Hello Again!',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'welcome back you are missing',
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Email',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Password',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[400],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Container(
-                    child: Center(
-                      child: Text(
-                        'Sign In',
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: _headerHeight,
+              child: HeaderWidget(_headerHeight, false,
+                  Icons.login_rounded), //let's create a common header widget
+            ),
+            SafeArea(
+              child: Container(
+                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  margin: EdgeInsets.fromLTRB(
+                      20, 10, 20, 10), // This will be the login form
+                  child: Column(
+                    children: [
+                      Text(
+                        'Hello',
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                            fontSize: 60, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Not a member?',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    ' Register Now',
-                    style: TextStyle(
-                        color: Colors.blue, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )
-            ],
-          ),
+                      Text(
+                        'Signin into your account',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      SizedBox(height: 30.0),
+                      Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              Container(
+                                child: TextField(
+                                  decoration: ThemeHelper().textInputDecoration(
+                                      'User Name', 'Enter your user name'),
+                                ),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              SizedBox(height: 30.0),
+                              Container(
+                                child: TextField(
+                                  obscureText: true,
+                                  decoration: ThemeHelper().textInputDecoration(
+                                      'Password', 'Enter your password'),
+                                ),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              SizedBox(height: 15.0),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                                alignment: Alignment.topRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              forgotpasswordPage()),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Forgot your password?",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                child: ElevatedButton(
+                                  style: ThemeHelper().buttonStyle(),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                    child: Text(
+                                      'Sign In'.toUpperCase(),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    //After successful login we will redirect to profile page. Let's create profile page now
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                saleMainPage()));
+                                  },
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                //child: Text('Don\'t have an account? Create'),
+                                child: Text.rich(TextSpan(children: [
+                                  TextSpan(text: "Don\'t have an account? "),
+                                  TextSpan(
+                                    text: 'Create',
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    registerPage()));
+                                      },
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context).accentColor),
+                                  ),
+                                ])),
+                              ),
+                            ],
+                          )),
+                    ],
+                  )),
+            ),
+          ],
         ),
       ),
     );
